@@ -5,6 +5,8 @@
 #include <stdio.h>
 int	main(int argc, char *argv[])
 {
+	// -- Fork --
+	// You have to fork and run execve as a child process.
 
 	// -- Execve --
 	/*
