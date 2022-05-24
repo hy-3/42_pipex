@@ -66,6 +66,8 @@ int	main(int argc, char *argv[])
 	int		argnum_first;
 	char	*path_first;
 
+	int		p[2];
+
 	char	*args_second[ARG_MAX];
 	char	**cmd_second;
 	int		argnum_second;
@@ -77,8 +79,8 @@ int	main(int argc, char *argv[])
 		argnum_first = count_num_of_strings(argv[2]);
 		if (argnum_first == 0)
 		{
-			write(1, "Please provide a command.\n", 26);
-			exit(0);
+			write(1, "Error: Please provide a command.\n", 33);
+			exit(1);
 		}
 		cmd_first = cust_split(argv[2]);
 		i = -1;
@@ -88,18 +90,21 @@ int	main(int argc, char *argv[])
 		args_first[argnum_first + 1] = NULL;
 		path_first = is_cmd_exist_and_executable(args_first[0]);
 		if (path_first == NULL)
-			exit(0);
+			exit(1);
+		if (pipe(p) < 0)
+			exit(1);
+		
+		if (fork() == 0)
+		{
+			dup2(p[1], 1);
+			execve(path_first, args_first, NULL);
+		}
+		else
+			printf("else\n");
 
-		// if (fork() == 0)
-		// {
-		// 	printf("ch\n");
-		// }
-		// else
-		// 	printf("else\n");
-
-		execve(path_first, args_first, NULL); //won't print to srdin if run in child process.
-
-
+		char inbuf[20];
+		read(p[0], inbuf, 20);
+		printf("read: %s\n", inbuf);
 
 		// if (argv[4])
 		// {
