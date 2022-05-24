@@ -1,7 +1,10 @@
 NAME = pipex
 CC = gcc
 #FLAGS = -Wall -Wextra -Werror
-SRC = src/main.c
+SRC = \
+	src/main.c \
+	util/str_join.c \
+	util/str_split.c
 OBJ = $(SRC:%.c=%.o)
 
 all: $(NAME)
@@ -15,7 +18,9 @@ $(NAME): $(OBJ)
 re: fclean all
 
 fclean: clean
+	rm -f pipex
 
 clean:
+	rm -f $(OBJ)
 
 .phony = all re fclean clean
