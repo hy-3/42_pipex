@@ -44,14 +44,16 @@ char	*is_cmd_exist_and_executable(char *cmd)
 int	main(int argc, char *argv[])
 {
 	int		i;
-	char	*args_first[ARG_MAX];
+	// char	*args_first[ARG_MAX];
+	char	*args_first[100];
 	char	**cmd_first;
 	int		argnum_first;
 	char	*path_first;
 
 	int		p[2];
 
-	char	*args_second[ARG_MAX];
+	// char	*args_second[ARG_MAX];
+	char	*args_second[100];
 	char	**cmd_second;
 	int		argnum_second;
 	char	*path_second;
@@ -81,6 +83,7 @@ int	main(int argc, char *argv[])
 			exit(1);
 		if (fork() == 0)
 		{
+			close(p[0]);
 			dup2(p[1], 1);
 			execve(path_first, args_first, NULL);
 		}
@@ -97,21 +100,28 @@ int	main(int argc, char *argv[])
 			write(1, "Error: Please provide a command.\n", 33);
 			exit(1);
 		}
-		cmd_second = cust_split(argv[2]);
+		cmd_second = cust_split(argv[3]);
 		i = -1;
 		while (++i < argnum_second)
 			args_second[i] = cmd_second[i];
-		args_second[argnum_first] = NULL;
+		args_second[argnum_second] = NULL;
 		path_second = is_cmd_exist_and_executable(args_second[0]);
 		if (path_second == NULL)
 			exit(1);
 		if (fork() == 0)
 		{
-			dup2(0, p[0]);
+			close(p[1]);
+			dup2(p[0], 0);
 			execve(path_second, args_second, NULL);
 		}
 		else
 			printf("else\n");
+		close(p[0]);
+		close(p[1]);
+
+		int status;
+		waitpid(-1,&status,0);
+		waitpid(-1,&status,0);
 
 		//-- output file --
 		// if (argv[4])
