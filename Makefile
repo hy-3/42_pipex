@@ -3,7 +3,7 @@ CC = gcc
 #FLAGS = -Wall -Wextra -Werror
 SRC = \
 	src/main.c \
-	util/stdout_error.c \
+	util/stderr.c \
 	util/str_join.c \
 	util/str_split.c 
 OBJ = $(SRC:%.c=%.o)
