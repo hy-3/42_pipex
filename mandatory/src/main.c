@@ -89,7 +89,6 @@ int	main(int argc, char *argv[])
 		close(p[1]);
 		if (waitpid(-1, NULL, 0) == -1)
 			cust_perror("Error");
-		is_file_exist_and_writable(argv[4]);
 	}
 	else
 		cust_write("Error: Give 4 args (input, cmd1, cmd2, output)\n");

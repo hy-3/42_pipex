@@ -1,18 +1,28 @@
 NAME = pipex
 CC = gcc
 #FLAGS = -Wall -Wextra -Werror
-SRC = \
-	src/main.c \
-	util/check.c \
-	util/stderr.c \
-	util/str_join.c \
-	util/str_split.c 
-OBJ = $(SRC:%.c=%.o)
+MAND_SRC = \
+	mandatory/src/main.c \
+	mandatory/util/check.c \
+	mandatory/util/stderr.c \
+	mandatory/util/str_join.c \
+	mandatory/util/str_split.c 
+MAND_OBJ = $(MAND_SRC:%.c=%.o)
+BONUS_SRC = \
+	bonus/src/main_bonus.c \
+	bonus/util/check_bonus.c \
+	bonus/util/stderr_bonus.c \
+	bonus/util/str_join_bonus.c \
+	bonus/util/str_split_bonus.c 
+BONUS_OBJ = $(BONUS_SRC:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) -o $(NAME)
+$(NAME): $(MAND_OBJ)
+	$(CC) $(FLAGS) $(MAND_OBJ) -o $(NAME)
+
+bonus: $(BONUS_OBJ)
+	$(CC) $(FLAGS) $(BONUS_OBJ) -o $(NAME)
 
 %.o:%.c
 	$(CC) $(FLAGS) -c $< -o $@
@@ -23,6 +33,6 @@ fclean: clean
 	rm -f pipex
 
 clean:
-	rm -f $(OBJ)
+	rm -f $(MAND_OBJ) $(BONUS_OBJ)
 
-.phony = all re fclean clean
+.phony = all bonus re fclean clean
