@@ -3,6 +3,7 @@ CC = gcc
 #FLAGS = -Wall -Wextra -Werror
 SRC = \
 	src/main.c \
+	util/check.c \
 	util/stderr.c \
 	util/str_join.c \
 	util/str_split.c 
