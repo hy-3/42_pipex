@@ -12,9 +12,9 @@
 
 #include "pipex.h"
 
-void	exec_first_cmd(char *argv[], int *p, int pid)
+void	exec_first_cmd(char *argv[], int *p, int pid, int fd)
 {
-	char	*args[ARG_MAX];
+	char	*args[100]; // char	*args[ARG_MAX];
 	char	**cmd;
 	int		arg_num;
 	char	*path;
@@ -23,8 +23,7 @@ void	exec_first_cmd(char *argv[], int *p, int pid)
 	if (arg_num == 0)
 		cust_write("Error: Please provide a command.\n");
 	cmd = cust_split(argv[2]);
-	args[arg_num] = argv[1]; //TODO: fix for the command which don't accept args. ex) date a.txt
-	args[arg_num + 1] = NULL;
+	args[arg_num] = NULL;
 	while (0 <= --arg_num)
 		args[arg_num] = cmd[arg_num];
 	path = is_cmd_exist_and_executable(args[0]);
@@ -35,13 +34,16 @@ void	exec_first_cmd(char *argv[], int *p, int pid)
 	{
 		close(p[0]);
 		dup2(p[1], 1);
+		fd = open(argv[1], O_RDONLY);
+		dup2(fd, 0);
+		close(fd);
 		execve(path, args, NULL);
 	}
 }
 
 void	exec_second_cmd(char *argv[], int *p, int pid, int fd)
 {
-	char	*args[ARG_MAX];
+	char	*args[100]; // char	*args[ARG_MAX];
 	char	**cmd;
 	int		arg_num;
 	char	*path;
@@ -79,7 +81,7 @@ int	main(int argc, char *argv[])
 		is_file_exist_and_readable(argv[1]);
 		if (pipe(p) < 0)
 			cust_perror("Error");
-		exec_first_cmd(argv, p, pid);
+		exec_first_cmd(argv, p, pid, fd);
 		if (waitpid(-1, NULL, 0) == -1)
 			cust_perror("Error");
 		exec_second_cmd(argv, p, pid, fd);
