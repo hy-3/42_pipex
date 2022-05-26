@@ -8,6 +8,14 @@ void	is_file_exist_and_readable(char *str)
 		cust_write("Error: No read access to input file.\n");
 }
 
+void	is_file_exist_and_writable(char *str)
+{
+	if (access(str, F_OK) != 0)
+		cust_write("Error: Output file doesn't exist.\n");
+	if (access(str, W_OK) != 0)
+		cust_write("Error: No write access to output file.\n");
+}
+
 char	*is_cmd_exist_and_executable(char *cmd)
 {
 	char	*bin_cmd;

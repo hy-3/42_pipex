@@ -8,6 +8,7 @@
 # include <stdio.h>
 # include <sys/types.h>
 # include <limits.h>
+# include <fcntl.h>
 
 # define BIN_PATH "/bin/"
 # define USRBIN_PATH "/usr/bin/"
@@ -15,6 +16,7 @@
 // check.c
 char	*is_cmd_exist_and_executable(char *cmd);
 void	is_file_exist_and_readable(char *str);
+void	is_file_exist_and_writable(char *str);
 // stderr.c
 void	cust_perror(char *str);
 void	cust_write(char *str);

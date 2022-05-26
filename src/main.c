@@ -11,7 +11,7 @@ void	exec_first_cmd(char *argv[], int *p, int pid)
 	if (arg_num == 0)
 		cust_write("Error: Please provide a command.\n");
 	cmd = cust_split(argv[2]);
-	args[arg_num] = argv[1];
+	args[arg_num] = argv[1]; //TODO: fix for the command which don't accept args. ex) date a.txt
 	args[arg_num + 1] = NULL;
 	while (0 <= --arg_num)
 		args[arg_num] = cmd[arg_num];
@@ -27,7 +27,7 @@ void	exec_first_cmd(char *argv[], int *p, int pid)
 	}
 }
 
-void	exec_second_cmd(char *argv[], int *p, int pid)
+void	exec_second_cmd(char *argv[], int *p, int pid, int fd)
 {
 	char	*args[ARG_MAX];
 	char	**cmd;
@@ -49,6 +49,9 @@ void	exec_second_cmd(char *argv[], int *p, int pid)
 	{
 		close(p[1]);
 		dup2(p[0], 0);
+		fd = open(argv[4], O_CREAT | O_TRUNC | O_WRONLY, 0777);
+		dup2(fd, 1);
+		close(fd);
 		execve(path, args, NULL);
 	}
 }
@@ -57,6 +60,7 @@ int	main(int argc, char *argv[])
 {
 	int	p[2];
 	int	pid;
+	int	fd;
 
 	if (argc == 5)
 	{
@@ -66,19 +70,14 @@ int	main(int argc, char *argv[])
 		exec_first_cmd(argv, p, pid);
 		if (waitpid(-1, NULL, 0) == -1)
 			cust_perror("Error");
-		exec_second_cmd(argv, p, pid);
+		exec_second_cmd(argv, p, pid, fd);
 		close(p[0]);
 		close(p[1]);
 		if (waitpid(-1, NULL, 0) == -1)
 			cust_perror("Error");
-
-		//-- output file --
-		// if (argv[4])
-		// {
-		// 	error handle when you couldn't create it or some other staffs.
-		// }
+		is_file_exist_and_writable(argv[4]);
 	}
 	else
-		cust_write("Error: Give 4 args(input file, cmd1, cmd2, output file)");
+		cust_write("Error: Give 4 args (input, cmd1, cmd2, output)\n");
 	return (0);
 }
