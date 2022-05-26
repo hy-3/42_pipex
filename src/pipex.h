@@ -15,5 +15,8 @@
 char	**cust_split(char const *s);
 int		count_num_of_strings(char const *s);
 char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlen(const char *str);
+void	cust_perror(char *str);
+void	cust_write(char *str);
 
 #endif

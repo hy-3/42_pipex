@@ -3,15 +3,9 @@
 void	is_file_exist_and_readable(char *str)
 {
 	if (access(str, F_OK) != 0)
-	{
-		write(1, "Input file doesn't exist.\n", 26);
-		exit(0);
-	}
+		cust_write("Error: Input file doesn't exist.\n");
 	if (access(str, R_OK) != 0)
-	{
-		write(1, "No read access to input file.\n", 29);
-		exit(0);
-	}
+		cust_write("Error: No read access to input file.\n");
 }
 
 char	*is_cmd_exist_and_executable(char *cmd)
@@ -34,94 +28,84 @@ char	*is_cmd_exist_and_executable(char *cmd)
 			return (usr_cmd);
 		}
 		else
-			perror("Error");
+			cust_perror("Error");
 	}
 	else
-		perror("Error");
+		cust_perror("Error");
 	return (NULL);
+}
+
+void	exec_first_cmd(char *argv[], int *p, int pid)
+{
+	char	*args[ARG_MAX];
+	char	**cmd;
+	int		arg_num;
+	char	*path;
+
+	arg_num = count_num_of_strings(argv[2]);
+	if (arg_num == 0)
+		cust_write("Error: Please provide a command.\n");
+	cmd = cust_split(argv[2]);
+	args[arg_num] = argv[1];
+	args[arg_num + 1] = NULL;
+	while (0 <= --arg_num)
+		args[arg_num] = cmd[arg_num];
+	path = is_cmd_exist_and_executable(args[0]);
+	pid = fork();
+	if (pid < 0)
+		cust_perror("Error");
+	if (pid == 0)
+	{
+		close(p[0]);
+		dup2(p[1], 1);
+		execve(path, args, NULL);
+	}
+}
+
+void	exec_second_cmd(char *argv[], int *p, int pid)
+{
+	char	*args[ARG_MAX];
+	char	**cmd;
+	int		arg_num;
+	char	*path;
+
+	arg_num = count_num_of_strings(argv[3]);
+	if (arg_num == 0)
+		cust_write("Error: Please provide a command.\n");
+	cmd = cust_split(argv[3]);
+	args[arg_num] = NULL;
+	while (0 <= --arg_num)
+		args[arg_num] = cmd[arg_num];
+	path = is_cmd_exist_and_executable(args[0]);
+	pid = fork();
+	if (pid < 0)
+		cust_perror("Error");
+	if (pid == 0)
+	{
+		close(p[1]);
+		dup2(p[0], 0);
+		execve(path, args, NULL);
+	}
 }
 
 int	main(int argc, char *argv[])
 {
-	int		i;
-	// char	*args_first[ARG_MAX];
-	char	*args_first[100];
-	char	**cmd_first;
-	int		argnum_first;
-	char	*path_first;
-
-	int		p[2];
-
-	// char	*args_second[ARG_MAX];
-	char	*args_second[100];
-	char	**cmd_second;
-	int		argnum_second;
-	char	*path_second;
+	int	p[2];
+	int	pid;
 
 	if (argc == 5)
 	{
-		//-- input file --
 		is_file_exist_and_readable(argv[1]);
-
-		//-- first cmd --
-		argnum_first = count_num_of_strings(argv[2]);
-		if (argnum_first == 0)
-		{
-			write(1, "Error: Please provide a command.\n", 33);
-			exit(1);
-		}
-		cmd_first = cust_split(argv[2]);
-		i = -1;
-		while (++i < argnum_first)
-			args_first[i] = cmd_first[i];
-		args_first[argnum_first] = argv[1];
-		args_first[argnum_first + 1] = NULL;
-		path_first = is_cmd_exist_and_executable(args_first[0]);
-		if (path_first == NULL)
-			exit(1);
 		if (pipe(p) < 0)
-			exit(1);
-		if (fork() == 0)
-		{
-			close(p[0]);
-			dup2(p[1], 1);
-			execve(path_first, args_first, NULL);
-		}
-		else
-			printf("else\n");
-		// char inbuf[20];
-		// read(p[0], inbuf, 20);
-		//printf("read: %s\n", inbuf);
-
-		//-- second cmd --
-		argnum_second = count_num_of_strings(argv[3]);
-		if (argnum_second == 0)
-		{
-			write(1, "Error: Please provide a command.\n", 33);
-			exit(1);
-		}
-		cmd_second = cust_split(argv[3]);
-		i = -1;
-		while (++i < argnum_second)
-			args_second[i] = cmd_second[i];
-		args_second[argnum_second] = NULL;
-		path_second = is_cmd_exist_and_executable(args_second[0]);
-		if (path_second == NULL)
-			exit(1);
-		if (fork() == 0)
-		{
-			close(p[1]);
-			dup2(p[0], 0);
-			execve(path_second, args_second, NULL);
-		}
-		else
-			printf("else\n");
+			cust_perror("Error");
+		exec_first_cmd(argv, p, pid);
+		if (waitpid(-1, NULL, 0) == -1)
+			cust_perror("Error");
+		exec_second_cmd(argv, p, pid);
 		close(p[0]);
 		close(p[1]);
-
-		int status;
-		waitpid(-1,&status,0);
-		waitpid(-1,&status,0);
+		if (waitpid(-1, NULL, 0) == -1)
+			cust_perror("Error");
 
 		//-- output file --
 		// if (argv[4])
@@ -130,10 +114,6 @@ int	main(int argc, char *argv[])
 		// }
 	}
 	else
-		write(1, "Give 4 arguments(<Input File Name>, <Command 1>, <Command 2>, <Output File Name>)\n", 82);
-
+		cust_write("Error: Give 4 args(input file, cmd1, cmd2, output file)");
 	return (0);
 }
-
-//TODO: learn how to pass output to 2nd cmd & how to create output file with allowed funcs.
-//ref: https://gist.github.com/iximiuz/65c7d2d128c374ef83d885dfef74bed7
