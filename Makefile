@@ -1,6 +1,6 @@
 NAME = pipex
 CC = gcc
-#FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 MAND_SRC = \
 	mandatory/src/main.c \
 	mandatory/util/check.c \
