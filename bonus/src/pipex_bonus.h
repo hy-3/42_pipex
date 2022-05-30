@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 12:56:01 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:24:53 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@
 
 # define BIN_PATH "/bin/"
 # define USRBIN_PATH "/usr/bin/"
+
+// child_bonus.c
+void	first_child(int *p, char **args, char *input_file);
+void	middle_child(int *p1, int *p2, char **args);
+void	last_child(int *p, char **args, char *output_file);
 
 // check_bonus.c
 char	*is_cmd_exist_and_executable(char *cmd);
