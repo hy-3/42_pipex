@@ -6,13 +6,13 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 15:21:09 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 15:37:59 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	first_cmd_child(int *p, char **args, char *input_file)
+void	first_child(int *p, char **args, char *input_file)
 {
 	int	fd;
 
@@ -26,7 +26,7 @@ void	first_cmd_child(int *p, char **args, char *input_file)
 	execve(is_cmd_exist_and_executable(args[0]), args, NULL);
 }
 
-void	second_cmd_child(int *p, char **args, char *output_file)
+void	second_child(int *p, char **args, char *output_file)
 {
 	int	fd;
 
@@ -58,7 +58,7 @@ void	exec_first_cmd(char *argv[], int *p)
 	if (pid < 0)
 		cust_perror("Error");
 	if (pid == 0)
-		first_cmd_child(p, args, argv[1]);
+		first_child(p, args, argv[1]);
 }
 
 void	exec_second_cmd(char *argv[], int *p)
@@ -79,7 +79,7 @@ void	exec_second_cmd(char *argv[], int *p)
 	if (pid < 0)
 		cust_perror("Error");
 	if (pid == 0)
-		second_cmd_child(p, args, argv[4]);
+		second_child(p, args, argv[4]);
 }
 
 int	main(int argc, char *argv[])
