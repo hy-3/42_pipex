@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 16:54:52 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:03:53 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ void	exec_first_cmd(char *argv[], int *p, char *path_env)
 	cmd = ft_split(argv[2], ' ');
 	args[arg_num] = NULL;
 	while (0 <= --arg_num)
+	{
 		args[arg_num] = cmd[arg_num];
+		free(cmd[arg_num]);
+	}
+	free(cmd);
 	pid = fork();
 	if (pid < 0)
 		cust_perror("Error");
@@ -76,7 +80,11 @@ void	exec_second_cmd(char *argv[], int *p, char *path_env)
 	cmd = ft_split(argv[3], ' ');
 	args[arg_num] = NULL;
 	while (0 <= --arg_num)
+	{
 		args[arg_num] = cmd[arg_num];
+		free(cmd[arg_num]);
+	}
+	free(cmd);
 	pid = fork();
 	if (pid < 0)
 		cust_perror("Error");
