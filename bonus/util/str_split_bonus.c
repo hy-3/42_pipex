@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_split_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:07:48 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 16:07:50 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:41:00 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	cust_free(char **res)
 	i = 0;
 	while (res[i] != NULL)
 		free(res[i++]);
-	free(res);
-	res = NULL;
 }
 
 void	fill_string_in_array(char const *s, char c, char **res)

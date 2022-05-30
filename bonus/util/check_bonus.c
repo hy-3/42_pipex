@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:51 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 17:07:11 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:47:21 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,17 @@ char	*get_path_env(char **envp)
 	return (res);
 }
 
+char	*create_cmd_path(char *each_path, char *cmd)
+{
+	char	*tmp;
+	char	*res;
+
+	tmp = ft_strjoin(each_path, "/");
+	res = ft_strjoin(tmp, cmd);
+	free(tmp);
+	return (res);
+}
+
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 {
 	int		arg_num;
@@ -46,16 +57,18 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 	char	*cmd_path;
 
 	arg_num = count_num_of_strings(path_env, ':');
-	if (arg_num == 0)
-		cust_write("Error: nothing set on PATH env.\n");
 	each_path = ft_split(path_env, ':');
 	while (0 <= --arg_num)
 	{
-		cmd_path = ft_strjoin(ft_strjoin(each_path[arg_num], "/"), cmd);
+		cmd_path = create_cmd_path(each_path[arg_num], cmd);
 		if (access(cmd_path, F_OK) == 0)
 		{
 			if (access(cmd_path, X_OK) == 0)
+			{
+				cust_free(each_path);
+				free(each_path);
 				return (cmd_path);
+			}
 			else
 				cust_perror("Error");
 		}

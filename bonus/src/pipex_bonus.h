@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 17:15:47 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:41:09 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 // util/str_split_bonus.c
 char	**ft_split(char const *s, char c);
 int		count_num_of_strings(char const *s, char c);
+void	cust_free(char **res);
 // util/strnstr_bonus.c
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 

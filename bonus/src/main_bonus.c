@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 17:42:46 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:44:49 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	exec_first_cmd(char *argv[], int *p1, char *path_env)
 		first_child(p1, args, argv[1], path_env);
 	if (waitpid(-1, NULL, 0) == -1)
 		cust_perror("Error(first_cmd)");
+	cust_free(cmd);
+	free(cmd);
 }
 
 void	exec_middle_cmd(char *middle_cmd, int *p1, int *p2, char *path_env)
@@ -58,6 +60,8 @@ void	exec_middle_cmd(char *middle_cmd, int *p1, int *p2, char *path_env)
 	close(p1[1]);
 	if (waitpid(-1, NULL, 0) == -1)
 		cust_perror("Error(mid_cmd)");
+	cust_free(cmd);
+	free(cmd);
 }
 
 void	exec_last_cmd(char *last_cmd, char *output, int *p1, char *path_env)
@@ -83,6 +87,8 @@ void	exec_last_cmd(char *last_cmd, char *output, int *p1, char *path_env)
 	close(p1[1]);
 	if (waitpid(-1, NULL, 0) == -1)
 		cust_perror("Error(last_cmd)");
+	cust_free(cmd);
+	free(cmd);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -111,7 +117,6 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	else
 		cust_write("Error: Give at least 4 args \n");
-	// system("leaks pipex");
 	return (0);
 }
 

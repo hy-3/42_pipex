@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 14:47:06 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 17:32:44 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:44:05 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	first_child(int *p1, char **args, char *input, char *path_env)
 {
-	int	fd;
+	int		fd;
+	char	*cmd_path;
 
 	close(p1[0]);
 	if (dup2(p1[1], 1) == -1)
@@ -23,23 +24,30 @@ void	first_child(int *p1, char **args, char *input, char *path_env)
 	if (dup2(fd, 0) == -1)
 		cust_perror("Error");
 	close(fd);
-	execve(is_cmd_exist_and_executable(path_env, args[0]), args, NULL);
+	cmd_path = is_cmd_exist_and_executable(path_env, args[0]);
+	execve(cmd_path, args, NULL);
+	free(cmd_path);
 }
 
 void	middle_child(int *p1, int *p2, char **args, char *path_env)
 {
+	char	*cmd_path;
+
 	close(p1[1]);
 	close(p2[0]);
 	if (dup2(p1[0], 0) == -1)
 		cust_perror("Error");
 	if (dup2(p2[1], 1) == -1)
 		cust_perror("Error");
-	execve(is_cmd_exist_and_executable(path_env, args[0]), args, NULL);
+	cmd_path = is_cmd_exist_and_executable(path_env, args[0]);
+	execve(cmd_path, args, NULL);
+	free(cmd_path);
 }
 
 void	last_child(int *p1, char **args, char *output, char *path_env)
 {
-	int	fd;
+	int		fd;
+	char	*cmd_path;
 
 	close(p1[1]);
 	if (dup2(p1[0], 0) == -1)
@@ -48,5 +56,7 @@ void	last_child(int *p1, char **args, char *output, char *path_env)
 	if (dup2(fd, 1) == -1)
 		cust_perror("Error");
 	close(fd);
-	execve(is_cmd_exist_and_executable(path_env, args[0]), args, NULL);
+	cmd_path = is_cmd_exist_and_executable(path_env, args[0]);
+	execve(cmd_path, args, NULL);
+	free(cmd_path);
 }
