@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 16:06:29 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:28:27 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ void	first_child(int *p, char **args, char *input_file);
 void	middle_child(int *p1, int *p2, char **args);
 void	last_child(int *p, char **args, char *output_file);
 // check_bonus.c
-char	*is_cmd_exist_and_executable(char *cmd);
 void	is_file_exist_and_readable(char *str);
-void	is_file_exist_and_writable(char *str);
+char	*is_cmd_exist_and_executable(char *cmd);
 // stderr_bonus.c
 void	cust_perror(char *str);
 void	cust_write(char *str);

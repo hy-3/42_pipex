@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 16:04:25 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:50:49 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,5 @@ int	main(int argc, char *argv[])
 	return (0);
 }
 
+//TODO: fix: take cmd path from environment
 //TODO: implement here_doc

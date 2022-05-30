@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:51 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/26 14:57:54 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:48:56 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,47 @@ void	is_file_exist_and_readable(char *str)
 		cust_write("Error: No read access to input file.\n");
 }
 
-char	*is_cmd_exist_and_executable(char *cmd)
+char	*get_path_env(char **envp)
 {
-	char	*bin_cmd;
-	char	*usr_cmd;
+	char	*res;
+	int		i;
 
-	bin_cmd = ft_strjoin(BIN_PATH, cmd);
-	usr_cmd = ft_strjoin(USRBIN_PATH, cmd);
-	if (access(bin_cmd, F_OK) == 0 || access(usr_cmd, F_OK) == 0)
+	res = NULL;
+	i = 0;
+	while (envp[i])
 	{
-		if (access(bin_cmd, X_OK) == 0)
-		{
-			free(usr_cmd);
-			return (bin_cmd);
-		}
-		else if (access(usr_cmd, X_OK) == 0)
-		{
-			free(bin_cmd);
-			return (usr_cmd);
-		}
-		else
-			cust_perror("Error");
+		res = ft_strnstr(envp[i++], "PATH=", 5);
+		if (res != NULL)
+			break ;
 	}
-	else
-		cust_perror("Error");
+	if (res == NULL)
+		cust_write("Error: PATH env can't be found from envirnment variables");
+	res += 5;
+	return (res);
+}
+
+char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
+{
+	int		arg_num;
+	char	**each_path;
+	char	*cmd_path;
+
+	arg_num = count_num_of_strings(path_env, ':');
+	if (arg_num == 0)
+		cust_write("Error: nothing set on PATH env.\n");
+	each_path = ft_split(path_env, ':');
+	while (0 <= --arg_num)
+	{
+		cmd_path = ft_strjoin(ft_strjoin(each_path[arg_num], "/"), cmd);
+		if (access(cmd_path, F_OK) == 0)
+		{
+			if (access(cmd_path, X_OK) == 0)
+				return (cmd_path);
+			else
+				cust_perror("Error");
+		}
+		free(cmd_path);
+	}
+	cust_perror("Error");
 	return (NULL);
 }

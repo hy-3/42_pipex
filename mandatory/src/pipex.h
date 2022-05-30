@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 16:01:41 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:45:55 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,10 @@
 # include <limits.h>
 # include <fcntl.h>
 
-# define BIN_PATH "/bin/"
-# define USRBIN_PATH "/usr/bin/"
-
 // check.c
-char	*is_cmd_exist_and_executable(char *cmd);
 void	is_file_exist_and_readable(char *str);
-void	is_file_exist_and_writable(char *str);
+char	*get_path_env(char **envp);
+char	*is_cmd_exist_and_executable(char *path_env, char *cmd);
 // stderr.c
 void	cust_perror(char *str);
 void	cust_write(char *str);
