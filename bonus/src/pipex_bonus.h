@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 12:54:17 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 12:56:01 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@
 # define BIN_PATH "/bin/"
 # define USRBIN_PATH "/usr/bin/"
 
-// check.c
+// check_bonus.c
 char	*is_cmd_exist_and_executable(char *cmd);
 void	is_file_exist_and_readable(char *str);
 void	is_file_exist_and_writable(char *str);
-// stderr.c
+// stderr_bonus.c
 void	cust_perror(char *str);
 void	cust_write(char *str);
-// str_join.c
+// str_join_bonus.c
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
-// str_split.c
+// str_split_bonus.c
 char	**cust_split(char const *s);
 int		count_num_of_strings(char const *s);
 
