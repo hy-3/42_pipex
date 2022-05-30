@@ -1,26 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   str_split.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 14:58:19 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/26 14:58:21 by hiyamamo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../src/pipex.h"
-
-int	count_num_of_strings(char const *s)
+int	count_num_of_strings(char const *s, char c)
 {
-	int		i;
-	int		res;
-	char	c;
+	int	i;
+	int	res;
 
 	i = 0;
 	res = 0;
-	c = ' ';
 	while (s[i] != '\0')
 	{
 		if (s[i] != c)
@@ -75,18 +59,18 @@ void	fill_string_in_array(char const *s, char c, char **res)
 	}
 }
 
-char	**cust_split(char const *s)
+char	**ft_split(char const *s, char c)
 {
 	int		num_of_strings;
 	char	**res;
 
 	if (s == NULL)
 		return (NULL);
-	num_of_strings = count_num_of_strings(s);
+	num_of_strings = count_num_of_strings(s, c);
 	res = (char **) malloc((num_of_strings + 1) * sizeof(char *));
 	if (res == NULL)
 		return (NULL);
-	fill_string_in_array(s, ' ', res);
+	fill_string_in_array(s, c, res);
 	res[num_of_strings] = NULL;
 	return (res);
 }

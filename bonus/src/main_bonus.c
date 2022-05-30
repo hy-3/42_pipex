@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 15:22:04 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:04:25 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	exec_first_cmd(char *argv[], int *p1)
 	int		arg_num;
 	int		pid;
 
-	arg_num = count_num_of_strings(argv[2]);
+	arg_num = count_num_of_strings(argv[2], ' ');
 	if (arg_num == 0)
 		cust_write("Error: Please provide a command.\n");
-	cmd = cust_split(argv[2]);
+	cmd = ft_split(argv[2], ' ');
 	args[arg_num] = NULL;
 	while (0 <= --arg_num)
 		args[arg_num] = cmd[arg_num];
@@ -42,10 +42,10 @@ void	exec_middle_cmd(char *middle_cmd, int *p1, int *p2)
 	int		arg_num;
 	int		pid;
 
-	arg_num = count_num_of_strings(middle_cmd);
+	arg_num = count_num_of_strings(middle_cmd, ' ');
 	if (arg_num == 0)
 		cust_write("Error: Please provide a command.\n");
-	cmd = cust_split(middle_cmd);
+	cmd = ft_split(middle_cmd, ' ');
 	args[arg_num] = NULL;
 	while (0 <= --arg_num)
 		args[arg_num] = cmd[arg_num];
@@ -67,10 +67,10 @@ void	exec_last_cmd(char *last_cmd, char *output_file, int *p1)
 	int		arg_num;
 	int		pid;
 
-	arg_num = count_num_of_strings(last_cmd);
+	arg_num = count_num_of_strings(last_cmd, ' ');
 	if (arg_num == 0)
 		cust_write("Error: Please provide a command.\n");
-	cmd = cust_split(last_cmd);
+	cmd = ft_split(last_cmd, ' ');
 	args[arg_num] = NULL;
 	while (0 <= --arg_num)
 		args[arg_num] = cmd[arg_num];

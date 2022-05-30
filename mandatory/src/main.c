@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 15:37:59 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:02:43 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	exec_first_cmd(char *argv[], int *p)
 	int		arg_num;
 	int		pid;
 
-	arg_num = count_num_of_strings(argv[2]);
+	arg_num = count_num_of_strings(argv[2], ' ');
 	if (arg_num == 0)
 		cust_write("Error: Please provide a command.\n");
-	cmd = cust_split(argv[2]);
+	cmd = ft_split(argv[2], ' ');
 	args[arg_num] = NULL;
 	while (0 <= --arg_num)
 		args[arg_num] = cmd[arg_num];
@@ -68,10 +68,10 @@ void	exec_second_cmd(char *argv[], int *p)
 	int		arg_num;
 	int		pid;
 
-	arg_num = count_num_of_strings(argv[3]);
+	arg_num = count_num_of_strings(argv[3], ' ');
 	if (arg_num == 0)
 		cust_write("Error: Please provide a command.\n");
-	cmd = cust_split(argv[3]);
+	cmd = ft_split(argv[3], ' ');
 	args[arg_num] = NULL;
 	while (0 <= --arg_num)
 		args[arg_num] = cmd[arg_num];
@@ -82,9 +82,37 @@ void	exec_second_cmd(char *argv[], int *p)
 		second_child(p, args, argv[4]);
 }
 
-int	main(int argc, char *argv[])
+void	check_cmd_path(char	**envp)
+{
+	char	*path;
+	int		i;
+	int		arg_num;
+
+	path = NULL;
+	i = 0;
+	while (envp[i])
+	{
+		path = ft_strnstr(envp[i++], "PATH=", 5);
+		if (path != NULL)
+			break;
+	}
+	if (path == NULL)
+		cust_write("Error: PATH env can't be found from envirnment variables");
+	path += 5;
+    printf("%s\n", path);
+	
+	arg_num = count_num_of_strings(path + 5, ':');
+	if (arg_num == 0)
+		cust_write("Error: nothing set on PATH env.\n");
+	cmd = ft_split(path + 5, ':');
+
+}
+
+int	main(int argc, char *argv[], char *envp[])
 {
 	int	p[2];
+
+	check_cmd_path(envp);
 
 	if (argc == 5)
 	{

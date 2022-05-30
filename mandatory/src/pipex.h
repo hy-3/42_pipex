@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 12:54:30 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:01:41 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	cust_write(char *str);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 // str_split.c
-char	**cust_split(char const *s);
-int		count_num_of_strings(char const *s);
+char	**ft_split(char const *s, char c);
+int		count_num_of_strings(char const *s, char c);
+// strnstr.c
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 
 #endif

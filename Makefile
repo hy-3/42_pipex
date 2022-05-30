@@ -6,7 +6,8 @@ MAND_SRC = \
 	mandatory/util/check.c \
 	mandatory/util/stderr.c \
 	mandatory/util/str_join.c \
-	mandatory/util/str_split.c 
+	mandatory/util/str_split.c \
+	mandatory/util/strnstr.c
 MAND_OBJ = $(MAND_SRC:%.c=%.o)
 BONUS_SRC = \
 	bonus/src/main_bonus.c \
