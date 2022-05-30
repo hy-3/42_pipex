@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 13:18:46 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 15:21:09 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,3 +104,5 @@ int	main(int argc, char *argv[])
 		cust_write("Error: Give 4 args (input, cmd1, cmd2, output)\n");
 	return (0);
 }
+
+//TODO: change to take a pth from envirnment

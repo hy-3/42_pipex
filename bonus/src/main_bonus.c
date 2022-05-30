@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 14:47:18 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 15:22:04 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,3 +111,5 @@ int	main(int argc, char *argv[])
 		cust_write("Error: Give at least 4 args \n");
 	return (0);
 }
+
+//TODO: implement here_doc
