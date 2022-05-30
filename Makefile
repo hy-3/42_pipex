@@ -15,7 +15,8 @@ BONUS_SRC = \
 	bonus/util/check_bonus.c \
 	bonus/util/stderr_bonus.c \
 	bonus/util/str_join_bonus.c \
-	bonus/util/str_split_bonus.c 
+	bonus/util/str_split_bonus.c \
+	bonus/util/strnstr_bonus.c
 BONUS_OBJ = $(BONUS_SRC:%.c=%.o)
 
 all: $(NAME)
