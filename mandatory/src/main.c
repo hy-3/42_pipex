@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 16:42:16 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:54:52 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	exec_first_cmd(char *argv[], int *p, char *path_env)
 		cust_perror("Error");
 	if (pid == 0)
 		first_child(p, args, argv[1], path_env);
+	if (waitpid(-1, NULL, 0) == -1)
+		cust_perror("Error");
 }
 
 void	exec_second_cmd(char *argv[], int *p, char *path_env)
@@ -80,6 +82,10 @@ void	exec_second_cmd(char *argv[], int *p, char *path_env)
 		cust_perror("Error");
 	if (pid == 0)
 		second_child(p, args, argv[4], path_env);
+	close(p[0]);
+	close(p[1]);
+	if (waitpid(-1, NULL, 0) == -1)
+		cust_perror("Error");
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -94,13 +100,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (pipe(p) < 0)
 			cust_perror("Error");
 		exec_first_cmd(argv, p, path_env);
-		if (waitpid(-1, NULL, 0) == -1)
-			cust_perror("Error");
 		exec_second_cmd(argv, p, path_env);
-		close(p[0]);
-		close(p[1]);
-		if (waitpid(-1, NULL, 0) == -1)
-			cust_perror("Error");
 	}
 	else
 		cust_write("Error: Give 4 args (input, cmd1, cmd2, output)\n");
