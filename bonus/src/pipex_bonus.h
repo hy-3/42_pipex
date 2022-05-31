@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/31 16:48:32 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:04:47 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	first_child(int *p, char **args, char *input_file, char *path_env);
 void	middle_child(int *p1, int *p2, char **args, char *path_env);
 void	last_child(int *p, char **args, char *output_file, char *path_env);
 void	exec_middle_cmd(char *middle_cmd, int *p1, int *p2, char *path_env);
-void	exec_last_cmd(char *last_cmd, char *output, int *p1, char *path_env);
 // src/heredoc/get_next_line_bonus.c
 char	*get_next_line(int fd);
 // src/heredoc/get_next_line_utils_bonus.c
