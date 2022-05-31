@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 18:37:40 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:12:28 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	first_child(int *p, char **args, char *input_file, char *path_env)
 
 	close(p[0]);
 	if (dup2(p[1], 1) == -1)
-		cust_perror("Error");
+		cust_perror("Error(first_child)");
 	fd = open(input_file, O_RDONLY);
 	if (dup2(fd, 0) == -1)
-		cust_perror("Error");
+		cust_perror("Error(first_child)");
 	close(fd);
 	cmd_path = is_cmd_exist_and_executable(path_env, args[0]);
 	execve(cmd_path, args, NULL);
@@ -36,10 +36,10 @@ void	second_child(int *p, char **args, char *output_file, char *path_env)
 
 	close(p[1]);
 	if (dup2(p[0], 0) == -1)
-		cust_perror("Error");
+		cust_perror("Error(second_child)");
 	fd = open(output_file, O_CREAT | O_TRUNC | O_WRONLY, 0777);
 	if (dup2(fd, 1) == -1)
-		cust_perror("Error");
+		cust_perror("Error(second_child)");
 	close(fd);
 	cmd_path = is_cmd_exist_and_executable(path_env, args[0]);
 	execve(cmd_path, args, NULL);
@@ -108,11 +108,11 @@ int	main(int argc, char *argv[], char *envp[])
 		is_file_exist_and_readable(argv[1]);
 		path_env = get_path_env(envp);
 		if (pipe(p) < 0)
-			cust_perror("Error");
+			cust_perror("Error(main)");
 		exec_first_cmd(argv, p, path_env);
 		exec_second_cmd(argv, p, path_env);
 	}
 	else
-		cust_write("Error: Give 4 args (input, cmd1, cmd2, output)\n");
+		cust_write("Error(main): Give 4 args (input, cmd1, cmd2, output)\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:51 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 18:37:13 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:13:20 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	is_file_exist_and_readable(char *str)
 {
 	if (access(str, F_OK) != 0)
-		cust_write("Error: Input file doesn't exist.\n");
+		cust_write("Error(file check): Input file doesn't exist.\n");
 	if (access(str, R_OK) != 0)
-		cust_write("Error: No read access to input file.\n");
+		cust_write("Error(file check): No read access to input file.\n");
 }
 
 char	*get_path_env(char **envp)
@@ -34,7 +34,7 @@ char	*get_path_env(char **envp)
 			break ;
 	}
 	if (res == NULL)
-		cust_write("Error: PATH env can't be found from envirnment variables");
+		cust_write("Error(env): no PATH env in envirnment variables.\n");
 	res += 5;
 	return (res);
 }
@@ -70,10 +70,10 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 				return (cmd_path);
 			}
 			else
-				cust_perror("Error");
+				cust_perror("Error(cmd check)");
 		}
 		free(cmd_path);
 	}
-	cust_perror("Error");
+	cust_perror("Error(cmd check)");
 	return (NULL);
 }
