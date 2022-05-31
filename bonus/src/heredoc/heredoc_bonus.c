@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:34:35 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/31 17:08:50 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:06:21 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	heredoc(char *argv[], int argc, char *limiter, char *envp[])
 	while (1)
 	{
 		str = get_next_line(0);
-		if (ft_strnstr(str, limiter, ft_strlen(limiter)) != NULL)
+		if (ft_strncmp(str, ft_strjoin(limiter, "\n"), \
+				ft_strlen(limiter) + 1) == 0)
 			break ;
 		write(p1[1], str, ft_strlen(str));
 	}

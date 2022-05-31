@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/31 16:48:00 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:50:50 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (argc >= 5)
 	{
-		if (ft_strnstr(argv[1], "here_doc", 9) != NULL)
+		if (ft_strncmp(argv[1], "here_doc", 9) == 0)
 			heredoc(argv, argc, argv[2], envp);
 		path_env = get_path_env(envp);
 		if (pipe(p[0]) < 0)

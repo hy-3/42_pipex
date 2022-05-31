@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:51 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/31 17:10:22 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:07:05 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,19 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 	}
 	cust_perror("Error(cmd check)");
 	return (NULL);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	while ((unsigned char) *s1 != '\0' && (unsigned char) *s2 != '\0' && n > 0)
+	{
+		if ((unsigned char) *s1 != (unsigned char) *s2)
+			return ((unsigned char) *s1 - (unsigned char) *s2);
+		s1++;
+		s2++;
+		n--;
+	}
+	if (n > 0)
+		return ((unsigned char) *s1 - (unsigned char) *s2);
+	return (0);
 }
