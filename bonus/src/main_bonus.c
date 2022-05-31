@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 18:44:49 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:48:00 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	exec_first_cmd(char *argv[], int *p1, char *path_env)
 	int		arg_num;
 	int		pid;
 
+	is_file_exist_and_readable(argv[1]);
 	arg_num = count_num_of_strings(argv[2], ' ');
 	if (arg_num == 0)
 		cust_write("Error(first_cmd): Please provide a command.\n");
@@ -99,25 +100,23 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (argc >= 5)
 	{
-		is_file_exist_and_readable(argv[1]);
+		if (ft_strnstr(argv[1], "here_doc", 9) != NULL)
+			heredoc(argv, argc, argv[2], envp);
 		path_env = get_path_env(envp);
 		if (pipe(p[0]) < 0)
-			cust_perror("Error");
+			cust_perror("Error(main)");
 		exec_first_cmd(argv, p[0], path_env);
 		argc -= 2;
-		i = 3;
-		while (i < argc)
+		i = 2;
+		while (++i < argc)
 		{
 			if (pipe(p[i - 2]) < 0)
-				cust_perror("Error");
+				cust_perror("Error(main)");
 			exec_middle_cmd(argv[i], p[i - 3], p[i - 2], path_env);
-			i++;
 		}
 		exec_last_cmd(argv[argc], argv[argc + 1], p[i - 3], path_env);
 	}
 	else
-		cust_write("Error: Give at least 4 args \n");
+		cust_write("Error(main): Give at least 4 args \n");
 	return (0);
 }
-
-//TODO: implement here_doc
