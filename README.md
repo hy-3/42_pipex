@@ -28,11 +28,11 @@ $ cmd_1 << LIMITER | cmd_2 >> output_file
 
 # Usage
 ```
->> Mandatory <<
+[Mandatory]
 $ make
 $ ./pipex input.txt cat wc output.txt
 
->> Bonus <<
+[Bonus]
 $ make bonus
 
 // Multiple pipes
