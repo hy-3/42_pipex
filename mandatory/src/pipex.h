@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 18:24:43 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:36:09 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 // util/check.c
 void	is_file_exist_and_readable(char *str);
-char	*get_path_env(char **envp);
+char	*get_value_of_pathenv(char **envp);
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd);
 // util/stderr.c
 void	cust_perror(char *str);

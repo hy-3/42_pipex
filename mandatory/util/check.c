@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:51 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/31 17:13:20 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:26:40 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 void	is_file_exist_and_readable(char *str)
 {
-	if (access(str, F_OK) != 0)
-		cust_write("Error(file check): Input file doesn't exist.\n");
-	if (access(str, R_OK) != 0)
-		cust_write("Error(file check): No read access to input file.\n");
+	if (access(str, F_OK) != 0 || access(str, R_OK) != 0)
+		perror("Error");
 }
 
-char	*get_path_env(char **envp)
+char	*get_value_of_pathenv(char **envp)
 {
 	char	*res;
 	int		i;
@@ -33,8 +31,6 @@ char	*get_path_env(char **envp)
 		if (res != NULL)
 			break ;
 	}
-	if (res == NULL)
-		cust_write("Error(env): no PATH env in envirnment variables.\n");
 	res += 5;
 	return (res);
 }
@@ -50,6 +46,21 @@ char	*create_cmd_path(char *each_path, char *cmd)
 	return (res);
 }
 
+char	*omit_slash_and_take_last_word(char *cmd)
+{
+	int	i;
+	int	position;
+
+	i = 0;
+	position = 0;
+	while (cmd[i++] != '\0')
+	{
+		if (cmd[i] == '/')
+			position = i + 1;
+	}
+	return (&cmd[position]);
+}
+
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 {
 	int		arg_num;
@@ -60,6 +71,8 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 	each_path = ft_split(path_env, ':');
 	while (0 <= --arg_num)
 	{
+		if (ft_strnstr(cmd, "/", ft_strlen(cmd)) != NULL)
+			cmd = omit_slash_and_take_last_word(cmd);
 		cmd_path = create_cmd_path(each_path[arg_num], cmd);
 		if (access(cmd_path, F_OK) == 0)
 		{
@@ -70,10 +83,10 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 				return (cmd_path);
 			}
 			else
-				cust_perror("Error(cmd check)");
+				perror("command isn't executable");
 		}
 		free(cmd_path);
 	}
-	cust_perror("Error(cmd check)");
+	perror("command not found");
 	return (NULL);
 }
