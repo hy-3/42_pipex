@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/01 18:08:58 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:46:22 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,12 @@ int	exec_second_cmd(t_param *param)
 		cust_perror("Error(second_cmd: fork)");
 	if (cmd_p.pid == 0)
 		second_child(param, cmd_p.exec_args);
-	if (close(param->p[0]) == -1)
-		cust_perror("Error(second_cmd: close p[0])");
-	if (close(param->p[1]) == -1)
-		cust_perror("Error(second_cmd: close p[1])");
+	if (!((close(param->p[0]) == 0) && (close(param->p[1]) == 0)))
+		cust_perror("Error(second_cmd: close p[0] or p[1])");
 	if (waitpid(cmd_p.pid, &cmd_p.status, 0) == -1)
 		cust_perror("Error(second_cmd: waitpid)");
-	wait(NULL);
+	if (wait(NULL) == -1)
+		cust_perror("Error(second_cmd: wait)");
 	cust_free(cmd_p.cmd_with_option);
 	free(cmd_p.cmd_with_option);
 	if (WIFEXITED(cmd_p.status))
