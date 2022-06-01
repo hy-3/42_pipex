@@ -6,11 +6,13 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/01 13:50:09 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:41:03 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+char **T = NULL;
 
 void	first_child(int *p, char **exec_args, char *input_file, char *path_env)
 {
@@ -29,7 +31,7 @@ void	first_child(int *p, char **exec_args, char *input_file, char *path_env)
 	if (close(fd) == -1)
 		exit(1);
 	cmd_path = is_cmd_exist_and_executable(path_env, exec_args[0]);
-	if (execve(cmd_path, exec_args, NULL) == -1)
+	if (execve(cmd_path, exec_args, T) == -1)
 		exit(127);
 	free(cmd_path);
 }
@@ -51,7 +53,7 @@ void	second_child(int *p, char **exec_args, char *output, char *path_env)
 	if (close(fd) == -1)
 		exit(1);
 	cmd_path = is_cmd_exist_and_executable(path_env, exec_args[0]);
-	if (execve(cmd_path, exec_args, NULL) == -1)
+	if (execve(cmd_path, exec_args, T) == -1)
 		exit(127);
 	free(cmd_path);
 }
@@ -119,6 +121,7 @@ int	main(int argc, char *argv[], char *envp[])
 	int		p[2];
 	char	*path_env;
 	int		status;
+	T = envp;
 
 	status = 0;
 	if (!envp)

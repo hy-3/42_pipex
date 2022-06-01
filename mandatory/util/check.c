@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:51 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/01 14:26:40 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:41:17 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,10 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 	each_path = ft_split(path_env, ':');
 	while (0 <= --arg_num)
 	{
-		if (ft_strnstr(cmd, "/", ft_strlen(cmd)) != NULL)
-			cmd = omit_slash_and_take_last_word(cmd);
+		if (access(cmd, F_OK) == 0)
+			return (cmd);
+		// if (ft_strnstr(cmd, "/", ft_strlen(cmd)) != NULL)
+		// 	cmd = omit_slash_and_take_last_word(cmd);
 		cmd_path = create_cmd_path(each_path[arg_num], cmd);
 		if (access(cmd_path, F_OK) == 0)
 		{
