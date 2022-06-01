@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/01 13:36:09 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:09:59 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,28 @@
 # include <limits.h>
 # include <fcntl.h>
 
-// util/check.c
-void	is_file_exist_and_readable(char *str);
+typedef struct s_param
+{
+	char	**argv;
+	char	**envp;
+	int		p[2];
+	char	*pathenv;
+
+}	t_param;
+
+typedef struct s_cmd_param
+{
+	char	*exec_args[ARG_MAX];
+	char	**cmd_with_option;
+	int		n;
+	int		pid;
+	int		status;
+}	t_cmd_param;
+
+// src/check_cmd.c
 char	*get_value_of_pathenv(char **envp);
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd);
-// util/stderr.c
+// src/stderr.c
 void	cust_perror(char *str);
 void	cust_write(char *str);
 // util/str_join.c

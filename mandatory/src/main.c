@@ -6,134 +6,122 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/01 16:41:03 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:08:58 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char **T = NULL;
-
-void	first_child(int *p, char **exec_args, char *input_file, char *path_env)
+void	first_child(t_param *param, char **exec_args)
 {
 	int		fd;
 	char	*cmd_path;
 
-	if (close(p[0]) == -1)
-		exit(1);
-	if (dup2(p[1], 1) == -1)
-		cust_perror("Error(first_child)");
-	fd = open(input_file, O_RDONLY);
+	if (close(param->p[0]) == -1)
+		cust_perror("Error(first_child: close p[0])");
+	if (dup2(param->p[1], 1) == -1)
+		cust_perror("Error(first_child: dup2 p[1])");
+	fd = open(param->argv[1], O_RDONLY);
 	if (fd == -1)
-		exit(1);
+		cust_perror("Error(first_child: open fd)");
 	if (dup2(fd, 0) == -1)
-		cust_perror("Error(first_child)");
+		cust_perror("Error(first_child: dep2 fd)");
 	if (close(fd) == -1)
-		exit(1);
-	cmd_path = is_cmd_exist_and_executable(path_env, exec_args[0]);
-	if (execve(cmd_path, exec_args, T) == -1)
+		cust_perror("Error(first_child: close fd)");
+	cmd_path = is_cmd_exist_and_executable(param->pathenv, exec_args[0]);
+	if (execve(cmd_path, exec_args, param->envp) == -1)
 		exit(127);
 	free(cmd_path);
 }
 
-void	second_child(int *p, char **exec_args, char *output, char *path_env)
+void	second_child(t_param *param, char **exec_args)
 {
 	int		fd;
 	char	*cmd_path;
 
-	if (close(p[1]) == -1)
-		exit(1);
-	if (dup2(p[0], 0) == -1)
-		cust_perror("Error(second_child)");
-	fd = open(output, O_CREAT | O_TRUNC | O_WRONLY, 0777);
+	if (close(param->p[1]) == -1)
+		cust_perror("Error(second_child: close p[1])");
+	if (dup2(param->p[0], 0) == -1)
+		cust_perror("Error(second_child: dup2 p[0])");
+	fd = open(param->argv[4], O_CREAT | O_TRUNC | O_WRONLY, 0777);
 	if (fd == -1)
-		exit(1);
+		cust_perror("Error(second_child: open fd)");
 	if (dup2(fd, 1) == -1)
-		cust_perror("Error(second_child)");
+		cust_perror("Error(second_child: dup2 fd)");
 	if (close(fd) == -1)
-		exit(1);
-	cmd_path = is_cmd_exist_and_executable(path_env, exec_args[0]);
-	if (execve(cmd_path, exec_args, T) == -1)
+		cust_perror("Error(second_child: close fd)");
+	cmd_path = is_cmd_exist_and_executable(param->pathenv, exec_args[0]);
+	if (execve(cmd_path, exec_args, param->envp) == -1)
 		exit(127);
 	free(cmd_path);
 }
 
-void	exec_first_cmd(char *argv[], int *p, char *path_env)
+void	exec_first_cmd(t_param *param)
 {
-	char	*exec_args[ARG_MAX];
-	char	**cmds;
-	int		arg_num;
-	int		pid;
+	t_cmd_param	cmd_p;
 
-	arg_num = count_num_of_strings(argv[2], ' ');
-	// if (arg_num == 0)
-	// 	cust_write("Error(first_cmd): Please provide a command.\n");
-	cmds = ft_split(argv[2], ' ');
-	exec_args[arg_num] = NULL;
-	while (0 <= --arg_num)
-		exec_args[arg_num] = cmds[arg_num];
-	pid = fork();
-	if (pid < 0)
-		cust_perror("Error(first_cmd)");
-	if (pid == 0)
-		first_child(p, exec_args, argv[1], path_env);
-	cust_free(cmds);
-	free(cmds);
+	cmd_p.n = count_num_of_strings(param->argv[2], ' ');
+	cmd_p.cmd_with_option = ft_split(param->argv[2], ' ');
+	cmd_p.exec_args[cmd_p.n] = NULL;
+	while (0 <= --cmd_p.n)
+		cmd_p.exec_args[cmd_p.n] = cmd_p.cmd_with_option[cmd_p.n];
+	cmd_p.pid = fork();
+	if (cmd_p.pid < 0)
+		cust_perror("Error(first_cmd: fork)");
+	if (cmd_p.pid == 0)
+		first_child(param, cmd_p.exec_args);
+	cust_free(cmd_p.cmd_with_option);
+	free(cmd_p.cmd_with_option);
 }
 
-int	exec_second_cmd(char *argv[], int *p, char *path_env)
+int	exec_second_cmd(t_param *param)
 {
-	char	*exec_args[ARG_MAX];
-	char	**cmds;
-	int		arg_num;
-	int		pid;
-	int		status;
+	t_cmd_param	cmd_p;
 
-	arg_num = count_num_of_strings(argv[3], ' ');
-	// if (arg_num == 0)
-	// 	cust_write("Error(second_cmd): Please provide a command.\n");
-	cmds = ft_split(argv[3], ' ');
-	exec_args[arg_num] = NULL;
-	while (0 <= --arg_num)
-		exec_args[arg_num] = cmds[arg_num];
-	pid = fork();
-	if (pid < 0)
-		cust_perror("Error(second_cmd)");
-	if (pid == 0)
-		second_child(p, exec_args, argv[4], path_env);
-	if (close(p[0]) == -1)
-		exit(1);
-	if (close(p[1]) == -1)
-		exit(1);
-	if (waitpid(pid, &status, 0) == -1)
-		cust_perror("Error(second_cmd)");
-	wait(NULL); //TODO search
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
+	cmd_p.n = count_num_of_strings(param->argv[3], ' ');
+	cmd_p.cmd_with_option = ft_split(param->argv[3], ' ');
+	cmd_p.exec_args[cmd_p.n] = NULL;
+	while (0 <= --cmd_p.n)
+		cmd_p.exec_args[cmd_p.n] = cmd_p.cmd_with_option[cmd_p.n];
+	cmd_p.pid = fork();
+	if (cmd_p.pid < 0)
+		cust_perror("Error(second_cmd: fork)");
+	if (cmd_p.pid == 0)
+		second_child(param, cmd_p.exec_args);
+	if (close(param->p[0]) == -1)
+		cust_perror("Error(second_cmd: close p[0])");
+	if (close(param->p[1]) == -1)
+		cust_perror("Error(second_cmd: close p[1])");
+	if (waitpid(cmd_p.pid, &cmd_p.status, 0) == -1)
+		cust_perror("Error(second_cmd: waitpid)");
+	wait(NULL);
+	cust_free(cmd_p.cmd_with_option);
+	free(cmd_p.cmd_with_option);
+	if (WIFEXITED(cmd_p.status))
+		return (WEXITSTATUS(cmd_p.status));
 	else
-		return (WSTOPSIG(status));
-	cust_free(cmds);
-	free(cmds);
+		return (WSTOPSIG(cmd_p.status));
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	int		p[2];
-	char	*path_env;
+	t_param	param;
 	int		status;
-	T = envp;
 
 	status = 0;
+	param.argv = argv;
+	param.envp = envp;
 	if (!envp)
 		exit(1);
 	if (argc == 5)
 	{
-		is_file_exist_and_readable(argv[1]);
-		path_env = get_value_of_pathenv(envp);
-		if (pipe(p) < 0)
-			cust_perror("Error(main)");
-		exec_first_cmd(argv, p, path_env);
-		status = exec_second_cmd(argv, p, path_env);
+		if (access(argv[1], F_OK) != 0 || access(argv[1], R_OK) != 0)
+			perror("Error(main: input file check)");
+		param.pathenv = get_value_of_pathenv(envp);
+		if (pipe(param.p) < 0)
+			cust_perror("Error(main: pipe)");
+		exec_first_cmd(&param);
+		status = exec_second_cmd(&param);
 	}
 	else
 		cust_write("Error(main): Give 4 args (input, cmd1, cmd2, output)\n");

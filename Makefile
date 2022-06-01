@@ -4,8 +4,8 @@ FLAGS = -Wall -Wextra -Werror
 FLAGS_GNL = -Wall -Wextra -Werror -D BUFFER_SIZE=10
 MAND_SRC = \
 	mandatory/src/main.c \
-	mandatory/util/check.c \
-	mandatory/util/stderr.c \
+	mandatory/src/check_cmd.c \
+	mandatory/src/stderr.c \
 	mandatory/util/str_join.c \
 	mandatory/util/str_split.c \
 	mandatory/util/strnstr.c
