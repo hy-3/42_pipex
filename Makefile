@@ -8,7 +8,7 @@ MAND_SRC = \
 	mandatory/src/stderr.c \
 	mandatory/util/str_join.c \
 	mandatory/util/str_split.c \
-	mandatory/util/strnstr.c
+	mandatory/util/str_search.c
 MAND_OBJ = $(MAND_SRC:%.c=%.o)
 BONUS_SRC = \
 	bonus/src/main_bonus.c \
@@ -18,7 +18,7 @@ BONUS_SRC = \
 	bonus/util/check_bonus.c \
 	bonus/util/stderr_bonus.c \
 	bonus/util/str_split_bonus.c \
-	bonus/util/strnstr_bonus.c
+	bonus/util/str_search_bonus.c
 BONUS_OBJ = $(BONUS_SRC:%.c=%.o)
 BONUS_GNL_SRC = bonus/src/heredoc/get_next_line_bonus.c
 BONUS_GNL_OBJ = bonus/src/heredoc/get_next_line_bonus.o
