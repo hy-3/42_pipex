@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:34:35 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/03 15:02:46 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:27:48 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int	heredoc(t_param *pa, int argc)
 		if (ft_strncmp(str, limit_str, ft_strlen(pa->argv[2]) + 1) == 0)
 			break ;
 		write(p1[1], str, ft_strlen(str));
+		free(str);
 	}
 	free(limit_str);
 	pa->pathenv = get_value_of_pathenv(pa->envp);
