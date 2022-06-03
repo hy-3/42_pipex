@@ -22,6 +22,7 @@ $ < input_file cmd_1 | cmd_2 | cmd_3 ... | cmd_n > output_file
 - Support << and >> when the first parameter is "here_doc".
 ```
 $ ./pipex here_doc LIMIT_STRING cmd_1 cmd_2 output_file
+
 Above program is equal to below shell command.
 $ cmd_1 << LIMIT_STRING | cmd_2 >> output_file
 ```
