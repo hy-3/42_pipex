@@ -37,6 +37,8 @@ ex 2) $ ./pipex input.txt cat "wc -l" output.txt
 
 [Bonus]
 $ make bonus
+(If the above command returns `make: Nothing to be done for `bonus'.`, run a below command.)
+$ make re_bonus
 
 (Before running the below commands, you need to create input.txt to pass the content of it to cmd_1.)
 // Multiple pipes
