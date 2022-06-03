@@ -5,9 +5,8 @@ It's a program which acts as UNIX piping.
 ## [Mandatory]
 ```
 $ ./pipex input_file cmd_1 cmd_2 output_file
-```
+
 The execution of above program works same as below shell command.
-```
 $ < input_file cmd_1 | cmd_2 > output_file
 ```
 
