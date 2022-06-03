@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/03 12:34:46 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/03 14:36:21 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_cmd_param
 char	*get_value_of_pathenv(char **envp);
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd);
 // src/child_bonus.c
-void	first_child(t_param *pa, char **exec_args);
+void	first_child(int *p1, t_cmd_param *cmd_p, t_param *pa);
 void	middle_child(int *p1, int *p2, t_cmd_param *cmd_p, t_param *pa);
 void	last_child(int *p1, t_cmd_param *cmd_p, char *output, t_param *pa);
 // src/heredoc/get_next_line_bonus.c

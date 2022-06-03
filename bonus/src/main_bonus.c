@@ -6,13 +6,13 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/03 12:44:51 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/03 14:36:23 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	exec_first_cmd(t_param *pa)
+void	exec_first_cmd(int *p1, t_param *pa)
 {
 	t_cmd_param	cmd_p;
 
@@ -25,7 +25,7 @@ void	exec_first_cmd(t_param *pa)
 	if (cmd_p.pid < 0)
 		cust_perror("Error(first_cmd: fork)");
 	if (cmd_p.pid == 0)
-		first_child(pa, cmd_p.exec_args);
+		first_child(p1, &cmd_p, pa);
 	cust_free(cmd_p.cmd_with_option);
 	free(cmd_p.cmd_with_option);
 }
@@ -52,10 +52,6 @@ void	exec_middle_cmd(char *middle_cmd, int *p1, int *p2, t_param *pa)
 	// 	cust_perror("Error(second_cmd: wait)");
 	cust_free(cmd_p.cmd_with_option);
 	free(cmd_p.cmd_with_option);
-	// if (WIFEXITED(cmd_p.status))
-	// 	return (WEXITSTATUS(cmd_p.status));
-	// else
-	// 	return (WSTOPSIG(cmd_p.status));
 }
 
 int	exec_last_cmd(char *last_cmd, char *output, int *p1, t_param *pa)
@@ -106,7 +102,7 @@ int	main(int argc, char *argv[], char *envp[])
 		pa.pathenv = get_value_of_pathenv(envp);
 		if (pipe(pa.p[0]) < 0)
 			cust_perror("Error(main: pipe p[0])");
-		exec_first_cmd(&pa);
+		exec_first_cmd(pa.p[0], &pa);
 		argc -= 2;
 		i = 2;
 		while (++i < argc)
