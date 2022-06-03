@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strnstr_bonus.c                                    :+:      :+:    :+:   */
+/*   str_search_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiyamamo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 17:44:53 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/05/30 17:44:56 by hiyamamo         ###   ########.fr       */
+/*   Created: 2022/05/30 16:34:16 by hiyamamo          #+#    #+#             */
+/*   Updated: 2022/06/03 11:54:22 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,19 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 		i -= (k - 1);
 	}
 	return (NULL);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	while ((unsigned char) *s1 != '\0' && (unsigned char) *s2 != '\0' && n > 0)
+	{
+		if ((unsigned char) *s1 != (unsigned char) *s2)
+			return ((unsigned char) *s1 - (unsigned char) *s2);
+		s1++;
+		s2++;
+		n--;
+	}
+	if (n > 0)
+		return ((unsigned char) *s1 - (unsigned char) *s2);
+	return (0);
 }
