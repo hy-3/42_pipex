@@ -31,7 +31,7 @@ $ cmd_1 << LIMIT_STRING | cmd_2 >> output_file
 [Mandatory]
 $ make
 
-(Before running the below commands, you need to create input.txt to pass the content of it to cmd_1.)
+(Before running the below commands, you need to create input.txt with any content to pass the content of it to cmd_1.)
 ex 1) $ ./pipex input.txt cat wc output.txt
 ex 2) $ ./pipex input.txt cat "wc -l" output.txt
 
@@ -40,7 +40,7 @@ $ make bonus
 (If the above command returns `make: Nothing to be done for `bonus'.`, run a below command.)
 $ make re_bonus
 
-(Before running the below commands, you need to create input.txt to pass the content of it to cmd_1.)
+(Before running the below commands, you need to create input.txt with any contnet to pass the content of it to cmd_1.)
 // Multiple pipes
 ex 1) $ ./pipex input.txt cat "grep a" wc output.txt
 ex 2) $ ./pipex input.txt cat wc ls date output.txt
