@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/03 14:47:55 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/03 14:58:13 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	exec_first_cmd(int *p1, t_param *pa)
 		cust_perror("Error(first_cmd: fork)");
 	if (cmd_p.pid == 0)
 		first_child(p1, &cmd_p, pa);
+	if (waitpid(cmd_p.pid, NULL, 0) == -1)
+		cust_perror("Error(first_cmd: waitpid)");
 	cust_free(cmd_p.cmd_with_option);
 	free(cmd_p.cmd_with_option);
 }
@@ -46,10 +48,8 @@ void	exec_middle_cmd(char *middle_cmd, int *p1, int *p2, t_param *pa)
 		middle_child(p1, p2, &cmd_p, pa);
 	if (!((close(p1[0]) == 0) && (close(p1[1]) == 0)))
 		cust_perror("Error(middle_cmd: close p1[0] or p1[1])");
-	// if (waitpid(cmd_p.pid, &cmd_p.status, 0) == -1)
-	// 	cust_perror("Error(second_cmd: waitpid)");
-	// if (wait(NULL) == -1)
-	// 	cust_perror("Error(second_cmd: wait)");
+	if (waitpid(cmd_p.pid, NULL, 0) == -1)
+		cust_perror("Error(middle_cmd: waitpid)");
 	cust_free(cmd_p.cmd_with_option);
 	free(cmd_p.cmd_with_option);
 }
@@ -72,8 +72,6 @@ int	exec_last_cmd(char *last_cmd, char *output, int *p1, t_param *pa)
 		cust_perror("Error(last_cmd: close p1[0] or p1[1])");
 	if (waitpid(cmd_p.pid, &cmd_p.status, 0) == -1)
 		cust_perror("Error(last_cmd: waitpid)");
-	if (wait(NULL) == -1)
-		cust_perror("Error(last_cmd: wait)");
 	cust_free(cmd_p.cmd_with_option);
 	free(cmd_p.cmd_with_option);
 	if (WIFEXITED(cmd_p.status))
