@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/03 14:58:13 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:14:17 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,20 @@ int	exec_last_cmd(char *last_cmd, char *output, int *p1, t_param *pa)
 		return (WSTOPSIG(cmd_p.status));
 }
 
+void	handle_middle_cmd(t_param *pa)
+{
+	if (pipe(pa->p[pa->i - 2]) < 0)
+		cust_perror("Error(main: pipe p[i -2]");
+	exec_middle_cmd(pa->argv[pa->i], pa->p[pa->i - 3], pa->p[pa->i - 2], pa);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_param	pa;
-	int		status;
-	int		i;
 
-	status = 0;
+	pa.r = 0;
 	pa.argv = argv;
 	pa.envp = envp;
-	if (!envp)
-		exit(1);
 	if (argc >= 5)
 	{
 		if (ft_strncmp(argv[1], "here_doc", 9) == 0)
@@ -102,16 +105,12 @@ int	main(int argc, char *argv[], char *envp[])
 			cust_perror("Error(main: pipe p[0])");
 		exec_first_cmd(pa.p[0], &pa);
 		argc -= 2;
-		i = 2;
-		while (++i < argc)
-		{
-			if (pipe(pa.p[i - 2]) < 0)
-				cust_perror("Error(main: pipe p[i -2]");
-			exec_middle_cmd(argv[i], pa.p[i - 3], pa.p[i - 2], &pa);
-		}
-		status = exec_last_cmd(argv[i], argv[i + 1], pa.p[i - 3], &pa);
+		pa.i = 2;
+		while (++pa.i < argc)
+			handle_middle_cmd(&pa);
+		pa.r = exec_last_cmd(argv[pa.i], argv[pa.i + 1], pa.p[pa.i - 3], &pa);
 	}
 	else
 		cust_write("Error(main): Give 4 args (input, cmd1, cmd2, output)\n");
-	return (status);
+	return (pa.r);
 }

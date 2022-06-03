@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:34:35 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/03 13:04:39 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:02:46 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	first_child_heredoc(int *p1, int *p2, t_cmd_param *cmd_p, t_param *pa)
 
 int	exec_last_cmd_heredoc(t_param *pa, int *p2)
 {
-	t_cmd_param cmd_p;
+	t_cmd_param	cmd_p;
 
 	cmd_p.n = count_num_of_strings(pa->argv[4], ' ');
 	cmd_p.cmd_with_option = ft_split(pa->argv[4], ' ');
@@ -82,7 +82,7 @@ int	exec_last_cmd_heredoc(t_param *pa, int *p2)
 
 void	exec_first_cmd_heredoc(t_param *pa, int *p1, int *p2)
 {
-	t_cmd_param cmd_p;
+	t_cmd_param	cmd_p;
 
 	cmd_p.n = count_num_of_strings(pa->argv[3], ' ');
 	cmd_p.cmd_with_option = ft_split(pa->argv[3], ' ');
@@ -111,10 +111,8 @@ int	heredoc(t_param *pa, int argc)
 	status = 0;
 	if (argc != 6)
 		cust_write("Error(here_doc): Args have to be 5.\n");
-	if (pipe(p1) < 0)
-		cust_perror("Error(here_doc: pipe p1)");
-	if (pipe(p2) < 0)
-		cust_perror("Error(here_doc: pipe p2)");
+	if (!((pipe(p1) == 0) && (pipe(p2) == 0)))
+		cust_perror("Error(here_doc: pipe p1 or p2)");
 	limit_str = ft_strjoin(pa->argv[2], "\n");
 	while (1)
 	{

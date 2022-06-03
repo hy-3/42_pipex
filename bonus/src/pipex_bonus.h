@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/03 14:36:21 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:08:13 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <limits.h>
 # include <fcntl.h>
 // for get_next_line
-#include <sys/uio.h>
-#include <stddef.h>
+# include <sys/uio.h>
+# include <stddef.h>
 
 typedef struct s_param
 {
@@ -29,6 +29,8 @@ typedef struct s_param
 	char	**envp;
 	int		p[ARG_MAX][2];
 	char	*pathenv;
+	int		r;
+	int		i;
 }	t_param;
 
 typedef struct s_cmd_param
