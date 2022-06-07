@@ -2,6 +2,6 @@ pipex
 *.o
 *.txt
 .bonus
-pipex-tester/*
+pipex-tester
 bonus_old
 .vscode

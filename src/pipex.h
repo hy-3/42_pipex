@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/07 16:28:46 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 16:44:46 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int		heredoc(t_param *pa, int argc);
 // src/status.c
 int		wexitstatus(int status);
 // src/stderr.c
-void	cust_perror(char *str);
-void	cust_write(char *str);
+void	cust_perror(char *str, int status);
+void	cust_write(char *str, int status);
 // util/str_split.c
 char	**ft_split(char const *s, char c);
 int		count_num_of_strings(char const *s, char c);

@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:51 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/07 16:29:02 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 16:49:17 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*check_f_and_x(char	*cmd, char **each_path)
 			return (cmd);
 		}
 		else
-			perror("command not executable");
+			cust_perror("command not executable", 126);
 	}
 	return (NULL);
 }
@@ -76,6 +76,5 @@ char	*is_cmd_exist_and_executable(char *path_env, char *cmd)
 			return (res);
 		free(cmd_path);
 	}
-	perror("command not found");
 	return (NULL);
 }
