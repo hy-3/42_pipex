@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:34:35 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/07 16:50:45 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 17:08:16 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	last_child_heredoc(int *p2, t_cmd_param *cmd_p, t_param *pa)
 	cmd_path = is_cmd_exist_and_executable(pa->pathenv, cmd_p->exec_args[0]);
 	if (execve(cmd_path, cmd_p->exec_args, pa->envp) == -1)
 		exit(127);
-	free(cmd_path);
 }
 
 void	first_child_heredoc(int *p1, int *p2, t_cmd_param *cmd_p, t_param *pa)
@@ -49,7 +48,6 @@ void	first_child_heredoc(int *p1, int *p2, t_cmd_param *cmd_p, t_param *pa)
 	cmd_path = is_cmd_exist_and_executable(pa->pathenv, cmd_p->exec_args[0]);
 	if (execve(cmd_path, cmd_p->exec_args, pa->envp) == -1)
 		exit(127);
-	free(cmd_path);
 }
 
 int	exec_last_cmd_heredoc(t_param *pa, int *p2)

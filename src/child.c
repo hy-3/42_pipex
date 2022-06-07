@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:53:56 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/07 16:49:53 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 17:08:10 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	first_child(int *p1, t_cmd_param *cmd_p, t_param *pa)
 	cmd_path = is_cmd_exist_and_executable(pa->pathenv, cmd_p->exec_args[0]);
 	if (execve(cmd_path, cmd_p->exec_args, pa->envp) == -1)
 		cust_write("command not found\n", 127);
-	free(cmd_path);
 }
 
 void	middle_child(int *p1, int *p2, t_cmd_param *cmd_p, t_param *pa)
@@ -49,7 +48,6 @@ void	middle_child(int *p1, int *p2, t_cmd_param *cmd_p, t_param *pa)
 	cmd_path = is_cmd_exist_and_executable(pa->pathenv, cmd_p->exec_args[0]);
 	if (execve(cmd_path, cmd_p->exec_args, pa->envp) == -1)
 		cust_write("command not found\n", 127);
-	free(cmd_path);
 }
 
 void	last_child(int *p1, t_cmd_param *cmd_p, char *output, t_param *pa)
@@ -71,5 +69,4 @@ void	last_child(int *p1, t_cmd_param *cmd_p, char *output, t_param *pa)
 	cmd_path = is_cmd_exist_and_executable(pa->pathenv, cmd_p->exec_args[0]);
 	if (execve(cmd_path, cmd_p->exec_args, pa->envp) == -1)
 		cust_write("command not found\n", 127);
-	free(cmd_path);
 }
