@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/01 18:46:22 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:08:40 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,7 @@ int	exec_second_cmd(t_param *param)
 		cust_perror("Error(second_cmd: wait)");
 	cust_free(cmd_p.cmd_with_option);
 	free(cmd_p.cmd_with_option);
-	if (WIFEXITED(cmd_p.status))
-		return (WEXITSTATUS(cmd_p.status));
-	else
-		return (WSTOPSIG(cmd_p.status));
+	return (wexitstatus(cmd_p.status));
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -114,8 +111,6 @@ int	main(int argc, char *argv[], char *envp[])
 		exit(1);
 	if (argc == 5)
 	{
-		if (access(argv[1], F_OK) != 0 || access(argv[1], R_OK) != 0)
-			perror("Error(main: input file check)");
 		param.pathenv = get_value_of_pathenv(envp);
 		if (pipe(param.p) < 0)
 			cust_perror("Error(main: pipe)");

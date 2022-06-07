@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/01 19:01:09 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:46:12 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct s_cmd_param
 // src/check_cmd.c
 char	*get_value_of_pathenv(char **envp);
 char	*is_cmd_exist_and_executable(char *path_env, char *cmd);
+// src/status.c
+int		wexitstatus(int status);
 // src/stderr.c
 void	cust_perror(char *str);
 void	cust_write(char *str);

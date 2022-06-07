@@ -9,6 +9,7 @@ U = util
 MAND_SRC = \
 	$(M)/$(S)/main.c \
 	$(M)/$(S)/check_cmd.c \
+	$(M)/$(S)/status.c \
 	$(M)/$(S)/stderr.c \
 	$(M)/$(U)/str_join.c \
 	$(M)/$(U)/str_split.c \
