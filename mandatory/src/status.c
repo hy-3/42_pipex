@@ -6,11 +6,11 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 11:46:33 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/07 11:48:40 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:43:54 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	wexitstatus(int status)
 {
-	return  (((status) & 0xff00) >> 8);
+	return (((status) & 0xff00) >> 8);
 }
