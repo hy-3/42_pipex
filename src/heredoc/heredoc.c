@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_bonus.c                                    :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:34:35 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/07 12:28:47 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 16:29:07 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex_bonus.h"
+#include "../pipex.h"
 
 void	last_child_heredoc(int *p2, t_cmd_param *cmd_p, t_param *pa)
 {

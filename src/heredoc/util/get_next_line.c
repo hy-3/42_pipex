@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:34:15 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/07 12:48:50 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 16:29:12 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../pipex_bonus.h"
+#include "../../pipex.h"
 
 int	fill_container(char **container, char **buff)
 {

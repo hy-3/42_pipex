@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_split_bonus.c                                  :+:      :+:    :+:   */
+/*   str_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:20:23 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/03 11:54:30 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 16:28:04 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../src/pipex_bonus.h"
+#include "../src/pipex.h"
 
 int	count_num_of_strings(char const *s, char c)
 {

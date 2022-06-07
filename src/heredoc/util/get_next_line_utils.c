@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:34:28 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/07 12:48:56 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 16:29:16 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../pipex_bonus.h"
+#include "../../pipex.h"
 
 char	*ft_strchr(const char *s, int c)
 {
