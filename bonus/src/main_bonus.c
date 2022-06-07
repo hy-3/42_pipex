@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/03 15:27:58 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:32:10 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	exec_first_cmd(int *p1, t_param *pa)
 		cust_perror("Error(first_cmd: fork)");
 	if (cmd_p.pid == 0)
 		first_child(p1, &cmd_p, pa);
-	if (waitpid(cmd_p.pid, NULL, 0) == -1)
-		cust_perror("Error(first_cmd: waitpid)");
 	cust_free(cmd_p.cmd_with_option);
 	free(cmd_p.cmd_with_option);
 }
@@ -48,8 +46,6 @@ void	exec_middle_cmd(char *middle_cmd, int *p1, int *p2, t_param *pa)
 		middle_child(p1, p2, &cmd_p, pa);
 	if (!((close(p1[0]) == 0) && (close(p1[1]) == 0)))
 		cust_perror("Error(middle_cmd: close p1[0] or p1[1])");
-	if (waitpid(cmd_p.pid, NULL, 0) == -1)
-		cust_perror("Error(middle_cmd: waitpid)");
 	cust_free(cmd_p.cmd_with_option);
 	free(cmd_p.cmd_with_option);
 }
@@ -70,47 +66,48 @@ int	exec_last_cmd(char *last_cmd, char *output, int *p1, t_param *pa)
 		last_child(p1, &cmd_p, output, pa);
 	if (!((close(p1[0]) == 0) && (close(p1[1]) == 0)))
 		cust_perror("Error(last_cmd: close p1[0] or p1[1])");
-	if (waitpid(cmd_p.pid, &cmd_p.status, 0) == -1)
-		cust_perror("Error(last_cmd: waitpid)");
 	cust_free(cmd_p.cmd_with_option);
 	free(cmd_p.cmd_with_option);
-	if (WIFEXITED(cmd_p.status))
-		return (WEXITSTATUS(cmd_p.status));
-	else
-		return (WSTOPSIG(cmd_p.status));
+	return (cmd_p.pid);
 }
 
-void	handle_middle_cmd(t_param *pa)
+int	cust_wait(int num_of_executed_cmd, int pid)
 {
-	if (pipe(pa->p[pa->i - 2]) < 0)
-		cust_perror("Error(main: pipe p[i -2]");
-	exec_middle_cmd(pa->argv[pa->i], pa->p[pa->i - 3], pa->p[pa->i - 2], pa);
+	int	status;
+
+	while (num_of_executed_cmd-- > 0)
+		if (waitpid(-1, NULL, 0) == -1)
+			cust_perror("Error(last_cmd: waitpid)");
+	if (waitpid(pid, &status, 0) == -1)
+		cust_perror("Error(last_cmd: waitpid)");
+	return (wexitstatus(status));
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_param	pa;
+	int		pid;
 
 	pa.r = 0;
 	pa.argv = argv;
 	pa.envp = envp;
-	if (argc >= 5)
+	if (argc < 5)
+		cust_write("Error(main): Give more than 4 args.\n");
+	if (ft_strncmp(argv[1], "here_doc", 9) == 0)
+		return (heredoc(&pa, argc));
+	pa.pathenv = get_value_of_pathenv(envp);
+	if (pipe(pa.p[0]) < 0)
+		cust_perror("Error(main: pipe p[0])");
+	exec_first_cmd(pa.p[0], &pa);
+	argc -= 2;
+	pa.i = 2;
+	while (++pa.i < argc)
 	{
-		if (ft_strncmp(argv[1], "here_doc", 9) == 0)
-			return (heredoc(&pa, argc));
-		if (access(argv[1], F_OK) != 0 || access(argv[1], R_OK) != 0)
-			perror("Error(main: input file check)");
-		pa.pathenv = get_value_of_pathenv(envp);
-		if (pipe(pa.p[0]) < 0)
-			cust_perror("Error(main: pipe p[0])");
-		exec_first_cmd(pa.p[0], &pa);
-		argc -= 2;
-		pa.i = 2;
-		while (++pa.i < argc)
-			handle_middle_cmd(&pa);
-		pa.r = exec_last_cmd(argv[pa.i], argv[pa.i + 1], pa.p[pa.i - 3], &pa);
+		if (pipe(pa.p[pa.i - 2]) < 0)
+			cust_perror("Error(main: pipe p[i -2]");
+		exec_middle_cmd(argv[pa.i], pa.p[pa.i - 3], pa.p[pa.i - 2], &pa);
 	}
-	else
-		cust_write("Error(main): Give 4 args (input, cmd1, cmd2, output)\n");
+	pid = exec_last_cmd(argv[pa.i], argv[pa.i + 1], pa.p[pa.i - 3], &pa);
+	pa.r = cust_wait(pa.i - 2, pid);
 	return (pa.r);
 }

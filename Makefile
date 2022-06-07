@@ -21,6 +21,7 @@ BONUS_SRC = \
 	$(B)/$(S)/child_bonus.c \
 	$(B)/$(S)/heredoc/heredoc_bonus.c \
 	$(B)/$(S)/heredoc/get_next_line_utils_bonus.c \
+	$(B)/$(S)/status_bonus.c \
 	$(B)/$(S)/stderr_bonus.c \
 	$(B)/$(U)/str_split_bonus.c \
 	$(B)/$(U)/str_search_bonus.c

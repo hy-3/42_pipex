@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:34:35 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/03 15:27:48 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:28:47 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,7 @@ int	exec_last_cmd_heredoc(t_param *pa, int *p2)
 		cust_perror("Error(second_cmd: wait)");
 	cust_free(cmd_p.cmd_with_option);
 	free(cmd_p.cmd_with_option);
-	if (WIFEXITED(cmd_p.status))
-		return (WEXITSTATUS(cmd_p.status));
-	else
-		return (WSTOPSIG(cmd_p.status));
+	return (wexitstatus(cmd_p.status));
 }
 
 void	exec_first_cmd_heredoc(t_param *pa, int *p1, int *p2)

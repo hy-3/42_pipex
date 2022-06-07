@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/03 15:08:13 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:27:46 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 // src/heredoc/heredoc.c
 int		heredoc(t_param *pa, int argc);
+// src/status_bonus.c
+int		wexitstatus(int status);
 // src/stderr_bonus.c
 void	cust_perror(char *str);
 void	cust_write(char *str);
