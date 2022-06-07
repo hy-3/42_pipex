@@ -20,14 +20,14 @@ BONUS_SRC = \
 	$(B)/$(S)/check_cmd_bonus.c \
 	$(B)/$(S)/child_bonus.c \
 	$(B)/$(S)/heredoc/heredoc_bonus.c \
-	$(B)/$(S)/heredoc/get_next_line_utils_bonus.c \
+	$(B)/$(S)/heredoc/util/get_next_line_utils_bonus.c \
 	$(B)/$(S)/status_bonus.c \
 	$(B)/$(S)/stderr_bonus.c \
 	$(B)/$(U)/str_split_bonus.c \
 	$(B)/$(U)/str_search_bonus.c
 BONUS_OBJ = $(BONUS_SRC:%.c=%.o)
-BONUS_GNL_SRC = $(B)/$(S)/heredoc/get_next_line_bonus.c
-BONUS_GNL_OBJ = $(B)/$(S)/heredoc/get_next_line_bonus.o
+BONUS_GNL_SRC = $(B)/$(S)/heredoc/util/get_next_line_bonus.c
+BONUS_GNL_OBJ = $(B)/$(S)/heredoc/util/get_next_line_bonus.o
 
 all: $(NAME)
 

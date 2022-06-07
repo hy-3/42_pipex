@@ -6,11 +6,11 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:34:28 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/03 11:51:16 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:48:56 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex_bonus.h"
+#include "../../pipex_bonus.h"
 
 char	*ft_strchr(const char *s, int c)
 {
