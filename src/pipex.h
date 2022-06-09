@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:38 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/07 16:44:46 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:03:05 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_param
 	char	**envp;
 	int		p[ARG_MAX][2];
 	char	*pathenv;
-	int		r;
+	int		result;
 	int		i;
 }	t_param;
 

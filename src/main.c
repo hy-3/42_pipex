@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/07 17:07:58 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:07:54 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	exec_last_cmd(char *last_cmd, char *output, int *p1, t_param *pa)
 	return (wexitstatus(cmd_p.status));
 }
 
-void	cust_wait(int num_of_executed_cmd)
+void	cust_waitpid(int num_of_executed_cmd)
 {
 	while (num_of_executed_cmd-- > 0)
 	{
@@ -86,7 +86,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_param	pa;
 
-	pa.r = 0;
+	pa.result = 0;
 	pa.argv = argv;
 	pa.envp = envp;
 	if (argc < 5)
@@ -105,7 +105,7 @@ int	main(int argc, char *argv[], char *envp[])
 			cust_perror("Error(main: pipe p[i - 2]", 1);
 		exec_middle_cmd(argv[pa.i], pa.p[pa.i - 3], pa.p[pa.i - 2], &pa);
 	}
-	pa.r = exec_last_cmd(argv[pa.i], argv[pa.i + 1], pa.p[pa.i - 3], &pa);
-	cust_wait(pa.i - 2);
-	return (pa.r);
+	pa.result = exec_last_cmd(argv[pa.i], argv[pa.i + 1], pa.p[pa.i - 3], &pa);
+	cust_waitpid(pa.i - 2);
+	return (pa.result);
 }
