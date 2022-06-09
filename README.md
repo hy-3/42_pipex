@@ -26,7 +26,7 @@ The execution of above program is equal to below shell command.<br>
 > $ cmd_1 << LIMIT_STRING | cmd_2 >> output_file
 
 
-# Usage
+## Usage
 ```
 $ make 
 
