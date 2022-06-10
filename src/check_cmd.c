@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:51 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/07 16:49:17 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/10 12:21:54 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ char	*get_value_of_pathenv(char **envp)
 	{
 		res = ft_strnstr(envp[i++], "PATH=", 5);
 		if (res != NULL)
+		{
+			res += 5;
 			break ;
+		}
 	}
-	res += 5;
 	return (res);
 }
 

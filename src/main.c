@@ -6,7 +6,7 @@
 /*   By: hiyamamo <hiyamamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:57:25 by hiyamamo          #+#    #+#             */
-/*   Updated: 2022/06/09 15:07:54 by hiyamamo         ###   ########.fr       */
+/*   Updated: 2022/06/10 12:32:30 by hiyamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	exec_first_cmd(int *p1, t_param *pa)
 
 	cmd_p.n = count_num_of_strings(pa->argv[2], ' ');
 	cmd_p.cmd_with_option = ft_split(pa->argv[2], ' ');
+	if (cmd_p.cmd_with_option == NULL)
+		cust_write("Error(first_cmd): malloc failed\n", 1);
 	cmd_p.exec_args[cmd_p.n] = NULL;
 	while (0 <= --cmd_p.n)
 		cmd_p.exec_args[cmd_p.n] = cmd_p.cmd_with_option[cmd_p.n];
@@ -36,6 +38,8 @@ void	exec_middle_cmd(char *middle_cmd, int *p1, int *p2, t_param *pa)
 
 	cmd_p.n = count_num_of_strings(middle_cmd, ' ');
 	cmd_p.cmd_with_option = ft_split(middle_cmd, ' ');
+	if (cmd_p.cmd_with_option == NULL)
+		cust_write("Error(middle_cmd): malloc failed\n", 1);
 	cmd_p.exec_args[cmd_p.n] = NULL;
 	while (0 <= --cmd_p.n)
 		cmd_p.exec_args[cmd_p.n] = cmd_p.cmd_with_option[cmd_p.n];
@@ -56,6 +60,8 @@ int	exec_last_cmd(char *last_cmd, char *output, int *p1, t_param *pa)
 
 	cmd_p.n = count_num_of_strings(last_cmd, ' ');
 	cmd_p.cmd_with_option = ft_split(last_cmd, ' ');
+	if (cmd_p.cmd_with_option == NULL)
+		cust_write("Error(last_cmd): malloc failed\n", 1);
 	cmd_p.exec_args[cmd_p.n] = NULL;
 	while (0 <= --cmd_p.n)
 		cmd_p.exec_args[cmd_p.n] = cmd_p.cmd_with_option[cmd_p.n];
