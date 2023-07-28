@@ -3,6 +3,8 @@
 It's a program which acts as UNIX piping.
 
 ## Overview
+You can check the subject [here](https://github.com/hy-3/42_pipex/blob/master/pipex.pdf)
+
 ### Piping mutliple commands.
 ```
 $ ./pipex input_file cmd_1 cmd_2 output_file
